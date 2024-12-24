@@ -26,7 +26,7 @@ def read_root():
     
 
 @app.post("/track_symptoms/")
-async def track_symptoms(files: List[UploadFile]= File(...), debug=True):
+async def track_symptoms(files: List[UploadFile]= File(...), debug=False):
     """Placeholder function for tracking symptoms."""
     try:
         extracted_data = []
@@ -63,9 +63,9 @@ async def track_symptoms(files: List[UploadFile]= File(...), debug=True):
             print("unique symptoms: ", standardized_symptom_names)
             print("metrics over time: ", metrics_over_time)
             print("symptom scores: ", symptoms_scores)
-            print("metrics scores: ", other_metrics_scores, sentiment_score)
+            print("metrics scores: ", other_metrics_scores)
+            print('sentiment score: ', sentiment_score)
             print('patient_cummulative_score: ', patient_cummulative_score)
-            print('metrics over time (stringified): ', json.dumps(metrics_over_time))
             
         # summarize and recommend
         assistant_notes = await summarize_recommend(metrics_over_time, patient_cummulative_score)
