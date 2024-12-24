@@ -2,7 +2,8 @@
 from .utils import *
 from .prompts import *
 from .structs import *
-from typing import List, Union, Dict
+from typing import List, Dict
+import os
 from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
 import json
@@ -40,16 +41,6 @@ async def score_symptoms(session_notes: List[Dict]):
     # print("note sample: ", filled_prompt[-1])
     return await symptom_scorer.abatch(filled_prompt)
 
-
-# async def standardize_symptom_names(symptoms: List[str]):
-#     """Fill the standardization prompt and invoke the standardizer."""
-#     symptoms = "| ".join([symptom.strip() for symptom in symptoms])
-#     print("symptoms noted: ", ", ".join(symptoms))
-#     filled_prompt = standardize_symptom_prompt.format(
-#         symptom_names= symptoms
-#     )
-#     return symptom_standardizer.invoke(filled_prompt)
-
 async def standardize_symptom_names(symptoms: List[str]):
     """Fill the standardization prompt and invoke the standardizer."""
     # Prepare symptoms as a clean, formatted list
@@ -77,8 +68,6 @@ async def standardize_symptom_names(symptoms: List[str]):
     standardize_symptom_names = await symptom_standardizer.ainvoke(filled_prompt)
     
     return {symptom.old_symptom_name: symptom.standard_symptom_name for symptom in standardize_symptom_names.symptom_dict}
-
-
 
 async def summarize_recommend(symptoms_with_score_over_time: dict, patient_progress_score: float):
     """Fill the progress summary prompt and invoke the assistant."""
