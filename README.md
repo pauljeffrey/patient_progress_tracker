@@ -35,6 +35,8 @@ This application helps therapists analyze patient progress across therapy sessio
         Frontend: http://localhost:8501
         Backend: http://localhost:8000/docs (for API documentation)
 
+<b> Note: Make sure to specify an openai api key at least in a .env file. </b>
+
 Stop the Application
 
 To stop the application, run:
