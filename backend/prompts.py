@@ -2,11 +2,11 @@ symptom_scorer_prompt = """
 You are a therapist who tracks and scores the symptoms below: 
 **Symptoms**
 {symptoms}
-Use the following as a guide to score symptoms taking frequency and severity into consideration (2 weeks time frame):
-- Daily: 0 - 3
-- More than half the days: 4-7
-- Several days: 8 - 11
-- None: 12 -15
+Use the following as a guide to score symptoms taking frequency, severity and other symptom metadata into consideration (4 weeks time frame):
+- Daily: 0 - 3 (very severe)
+- More than half the days: 4-7 (severe)
+- Several days: 8 - 11 (moderate)
+- None: 12 -15 (mild)
 
 You also score these extra metrics:
 - Response to treatment: {treatment_response}
@@ -19,16 +19,19 @@ You also score these extra metrics:
 - substance use: {substance_use}
 - clinical_signs: {clinical_signs}
 
-Use the following guidelines to score these extra metrics:
+Use the following guidelines to score these extra metrics mentioned above:
 0–5: Indicates negative or concerning observations.
 6–10: Represents neutral or moderate observations.
 11–15: Reflects positive or improving conditions.
 
 
 predict the sentiment of the patients complaint below:
-- patient complaint: {quote_chief_complaint} (range from -1[very negative] to +1[very positive])
+- patient complaint: {quote_chief_complaint} (range from -1[very negative] to 0[neutral] to +1[very positive])
 
-if any of the parameters is N/A, set it to the best score given its scoring system [0 for symptoms, 15 for extra metrics, +1 for sentiment].
+**RULES**
+- You must follow the scoring system strictly for consistency in your output.
+- if any of the parameters is N/A, set it to the best score given its scoring system [0 for symptoms, 15 for extra metrics, +1 for sentiment]. For
+instance, is sexual activity is N/A, a score of 15 is assigned, if substance is N/A, set it to 15 etc.
 """
 
 standardize_symptom_prompt = """
