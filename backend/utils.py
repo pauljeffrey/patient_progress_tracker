@@ -163,7 +163,7 @@ def compute_cumulative_score(symptom_scores, theme_scores, sentiment_score, weig
         weights['themes'] * total_theme_score +
         weights['sentiment'] * sentiment_score
     )
-
+    
     # Total weight
     total_weight = weights['symptoms'] + weights['themes'] + weights['sentiment']
 
@@ -200,7 +200,7 @@ def split_scores(scores):
     return symptom_scores, other_metrics_scores, sentiment_score
 
 
-def calculate_progress(symptoms_scores_over_time, alpha=1.0):
+def calculate_progress(symptoms_scores_over_time, alpha=0.05):
     """
     Calculate progress scores considering intermediate steps, with weights for recent meetings
     and a scaled drop penalty.
@@ -211,13 +211,13 @@ def calculate_progress(symptoms_scores_over_time, alpha=1.0):
         dict: Symptom progress scores and overall progress percentage.
     """
     progress_scores = {}
-    total_progress = 0
+    # total_progress = 0
     # num_symptoms = len(symptoms_scores_over_time)
 
     for symptom, scores in symptoms_scores_over_time.items():
         n = len(scores)
         if n < 2:
-            progress_scores[symptom] = 0  # No progress if there is only one score
+            progress_scores[symptom] = 0 # No progress if there is only one score
             continue
 
         # Calculate weights for each time step
@@ -246,8 +246,8 @@ def calculate_progress(symptoms_scores_over_time, alpha=1.0):
         )
 
         # Final progress score with penalty applied
-        final_progress = progress_percentage - drop_penalty
+        final_progress = max(0, progress_percentage -  drop_penalty) #prevent negative values
         progress_scores[symptom] = final_progress
-        total_progress += final_progress
+        # total_progress += final_progress
 
     return progress_scores         
