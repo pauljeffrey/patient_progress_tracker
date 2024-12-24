@@ -67,6 +67,4 @@ This project is open-source and available under the MIT License.
 - **Local Deployment**: Follow the steps under "How to Run Using Docker."
 - **Cloud Deployment**: Push the code to a cloud server with Docker installed. Use `docker-compose` commands to deploy.
 
-This setup makes it easy to run, test, and deploy the app quickly! Let me know if you need more help!
-
 
