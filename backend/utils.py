@@ -1,9 +1,6 @@
-import json
-import random
-import os
 import matplotlib.pyplot as plt
 import base64
-# from typing import List
+
 import io
 from typing import List, Dict
 from collections import defaultdict
@@ -14,8 +11,6 @@ theme = ['insight', 'impairment', 'sleep', 'nutrition', 'physical_activity', 'se
 
 def visualize_symptoms(symptoms_scores , use_symptoms=True , show_plot=False):
     """Generate a plot and return the image as bytes."""
-    
-    
     if not use_symptoms:
         # Filter items where the key is in the theme
         symptoms_scores = {key: value for key, value in symptoms_scores.items() if key in theme}
@@ -146,20 +141,6 @@ def score_sentiment(compound_score) -> int:
 
     return transformed_score
 
-def split_scores(scores):
-    symptom_scores = []
-    other_metrics_scores = []
-    sentiment_score = scores['sentiment']
-    
-    for key, value in scores.items():
-        if key == 'sentiment':
-            continue
-        if  key in theme:
-            other_metrics_scores.append(value)
-        else:
-            symptom_scores.append(value)
-            
-    return symptom_scores, other_metrics_scores, sentiment_score
 
 def compute_cumulative_score(symptom_scores, theme_scores, sentiment_score, weights={'symptoms': 0.7, 'themes': 0.20, 'sentiment': 0.10}  ):
     """
@@ -189,6 +170,34 @@ def compute_cumulative_score(symptom_scores, theme_scores, sentiment_score, weig
     # Compute cumulative score
     cumulative_score = weighted_sum / total_weight
     return cumulative_score
+
+
+def split_scores(scores):
+    """
+    Splits scores into symptoms, other metrics, and sentiment.
+
+    Args:
+        scores (dict): Dictionary of metric/symptom names and their scores.
+
+    Returns:
+        tuple:
+            - symptom_scores (list): Scores for symptoms.
+            - other_metrics_scores (list): Scores for predefined themes.
+            - sentiment_score (float): Sentiment score.
+    """
+    symptom_scores = []
+    other_metrics_scores = []
+    sentiment_score = scores['sentiment']
+    
+    for key, value in scores.items():
+        if key == 'sentiment':
+            continue
+        if key in theme:
+            other_metrics_scores.append(value)
+        else:
+            symptom_scores.append(value)
+            
+    return symptom_scores, other_metrics_scores, sentiment_score
 
 
 def calculate_progress(symptoms_scores_over_time, alpha=1.0):
@@ -241,61 +250,4 @@ def calculate_progress(symptoms_scores_over_time, alpha=1.0):
         progress_scores[symptom] = final_progress
         total_progress += final_progress
 
-    # Overall progress score
-    # overall_progress = total_progress / num_symptoms
-
-    return progress_scores         # "overall_progress": overall_progress
-
-
-if __name__ == '__main__':
-    file_name = random.choice(os.listdir("./data"))
-    file_path = os.path.join(os.path.abspath('./data'), file_name)
-    
-    
-    # Symptom scores over sessions
-    symptom_scores = {
-        "Anxiety": [-0.6, -0.4, -0.2],
-        "Hopelessness": [-0.8, -0.7],
-        "Sleep Issues": [-0.3, 0.0, 0.3, 0.5]
-    }
-
-    # Visualize the symptoms
-    # visualize_symptoms(symptom_scores)
-    
-    # Sample session JSON data
-    session_data = {
-        "Progress and Response": {
-            "Response to Treatment": "The client has shown minimal progress.",
-        },
-        "Psychological Factors": {
-            "Symptoms": {
-                "Symptom 1": {
-                    "Description": "Increased stress and anxiety related to academic pressures.",
-                    "Frequency": "Daily",
-                    "Intensity": "High"
-                }
-            }
-        },
-        "Biological Factors": {
-            "Sleep": "Difficulty sleeping due to stress.",
-            "Nutrition": "NA",
-            "Physical Activity": "NA",
-            "Sexual Activity": "NA",
-            "Substances": "NA"
-        },
-        "Mental Status Exam": {
-            "Insight": "The client recognized worsening symptoms but felt unable to manage them."
-        },
-        "Social Factors": {
-            "Relationships": "The client feels isolated."
-        },
-        "Presentation": {
-            "Impairments and Challenges": "Difficulty maintaining personal relationships.",
-            "Quote (Chief Complaint)": "\"I thought I was managing it better, but it just feels like everything is piling up again.\""
-        }
-    }
-
-    # Call the function
-    extracted_fields = extract_relevant_fields(session_data)
-    print(extracted_fields)
-
+    return progress_scores         
