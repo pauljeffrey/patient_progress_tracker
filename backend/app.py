@@ -26,7 +26,7 @@ def read_root():
     
 
 @app.post("/track_symptoms/")
-async def track_symptoms(files: List[UploadFile]= File(...), debug=False):
+async def track_symptoms(files: List[UploadFile]= File(...), debug=True):
     """Placeholder function for tracking symptoms."""
     try:
         extracted_data = []
