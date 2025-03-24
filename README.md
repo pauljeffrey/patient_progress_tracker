@@ -3,7 +3,7 @@
 ## Overview
 
 This application helps therapists analyze patient progress across therapy sessions. It includes:
-- A backend for processing therapy session files and generating insights.
+- A backend for processing therapy session files, scoring and weighting symptoms over sessions and generating insights.
 - A frontend for visualizing diagnosis, symptom tracking, and cumulative progress.
 
 ## Features
@@ -42,31 +42,5 @@ Stop the Application
 To stop the application, run:
 
 docker-compose down
-
-Deployment
-Deploy with Docker Compose
-
-    Modify docker-compose.yml to set BACKEND_URL for the frontend.
-    Deploy the Docker Compose setup to a cloud server like AWS EC2, GCP, or Azure.
-
-Frontend Deployment
-
-You can use Streamlit Cloud for frontend hosting. Ensure the backend URL is accessible publicly.
-Testing and Debugging
-
-    Test the backend independently using Swagger UI at http://localhost:8000/docs.
-    Ensure all required ports (8000 and 8501) are open and not blocked by firewalls.
-
-License
-
-This project is open-source and available under the MIT License.
-
-
----
-
-### **4. How to Deploy**
-
-- **Local Deployment**: Follow the steps under "How to Run Using Docker."
-- **Cloud Deployment**: Push the code to a cloud server with Docker installed. Use `docker-compose` commands to deploy.
 
 
