@@ -28,7 +28,7 @@ This application helps therapists analyze patient progress across therapy sessio
    cd <repository-directory>
 
 2. Build and start the Docker containers:
-
+    ```bash
     docker-compose up --build
 
 3. Access the application:
@@ -37,10 +37,10 @@ This application helps therapists analyze patient progress across therapy sessio
 
 <b> Note: Make sure to specify an openai api key at least in a .env file. </b>
 
-Stop the Application
+3. Stop the Application
 
 To stop the application, run:
-
-docker-compose down
+    ```bash
+    docker-compose down
 
 
