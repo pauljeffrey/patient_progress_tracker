@@ -2,7 +2,7 @@
 
 ## Overview
 
-This application helps therapists analyze patient progress across therapy sessions. It includes:
+This application helps therapists analyze patient progress across therapy sessions. It is designed to be used as a module in bigger AI workflow as its sole function is to track symptoms and progress of patients during therapy sessions. It includes:
 - A backend for processing therapy session files, scoring and weighting symptoms over sessions and generating insights.
 - A frontend for visualizing diagnosis, symptom tracking, and cumulative progress.
 
