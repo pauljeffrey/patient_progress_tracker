@@ -39,7 +39,7 @@ This application helps therapists analyze patient progress across therapy sessio
 
 3. Stop the Application
 
-To stop the application, run:
+    To stop the application, run:
     ```bash
     docker-compose down
 
